@@ -31,24 +31,22 @@ local plugins = {
         {"L3MON4D3/LuaSnip", version = "v2.*", build = "make install_jsregexp", 
 		dependencies = {'saadparwaiz1/cmp_luasnip','rafamadriz/friendly-snippets'}}, --snippet engine
         {"williamboman/mason.nvim"}, --lsp package manager
+		{"techtuner/wryan.nvim"},
 	{"nvimtools/none-ls.nvim"},
-        {"williamboman/mason-lspconfig.nvim"}, --lsp package manager configs
-	"lervag/vimtex", -- latex plugins
+        {"williamboman/mason-lspconfig.nvim"}, --lsp package manager config
+		-- latex pluginss
+	"lervag/vimtex", 
 	"KeitaNakamura/tex-conceal.vim",
-	--	'SirVer/ultisnips',
-	{ "SirVer/ultisnips", dependencies = { "honza/vim-snippets", "rbonvall/snipmate-snippets-bib" } },
-	"KeitaNakamura/tex-conceal.vim",
-	{
-		"sainnhe/everforest",
-		priority = 1000,
-		config = function()
-			-- Optionally configure and load the colorscheme
-			-- directly inside the plugin declaration.
-			vim.g.everforest_enable_italic = true
-			vim.cmd.colorscheme("everforest")
-		end,
-	},
-
+	{"nvim-telescope/telescope-bibtex.nvim", requires = {"nvim-telescope/telescope.nvim"}},
+	--color schemes
+    {"shaunsingh/nord.nvim",
+        name = "nord",
+	config = function()
+		vim.cmd("colorscheme nord")
+	end
+    },
+	{"folke/zen-mode.nvim"},
+	{"evesdropper/luasnip-latex-snippets.nvim"},
 }
 
 require("lazy").setup(plugins, {})

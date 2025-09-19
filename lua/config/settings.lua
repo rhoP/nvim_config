@@ -1,5 +1,7 @@
 vim.g.python3_host_prog="/usr/bin/python3"
 
+
+vim.g.clipboard=unnamedplus
 -- line numbering
 vim.opt.nu = true
 vim.opt.relativenumber = true
