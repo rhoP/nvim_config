@@ -25,7 +25,19 @@ local plugins = {
         	dependencies = {"nvim-lua/plenary.nvim"}},
     	{"mbbill/undotree"},
     	{"tpope/vim-fugitive"}, --lsp configuration
-        {"neovim/nvim-lspconfig"}, --lsp configs
+		{
+			"neovim/nvim-lspconfig",
+			optional = true,
+			opts = {
+			servers = {
+			texlab = {
+			keys = {
+				{ "<Leader>K", "<plug>(vimtex-doc-package)", desc = "Vimtex Docs", silent = true },
+						},
+					},
+				},
+			},
+		},
         {"hrsh7th/cmp-nvim-lsp"}, -- autocompletion
         {"hrsh7th/nvim-cmp"}, --additional autocompletion
         {"L3MON4D3/LuaSnip", version = "v2.*", build = "make install_jsregexp", 
@@ -47,6 +59,29 @@ local plugins = {
     },
 	{"folke/zen-mode.nvim"},
 	{"evesdropper/luasnip-latex-snippets.nvim"},
+		{"nvimtools/none-ls.nvim"},
+        {"williamboman/mason-lspconfig.nvim"}, --lsp package manager configs
+		{
+			"lervag/vimtex",
+			lazy = false, -- lazy-loading will disable inverse search
+			config = function()
+				vim.g.vimtex_mappings_disable = { ["n"] = { "K" } } -- disable `K` as it conflicts with LSP hover
+				vim.g.vimtex_quickfix_method = vim.fn.executable("pplatex") == 1 and "pplatex" or "latexlog"
+			end,
+			keys = {
+				{ "<localLeader>l", "", desc = "+vimtex", ft = "tex" },
+			},
+		},
+		{"KeitaNakamura/tex-conceal.vim"},
+		{"iurimateus/luasnip-latex-snippets.nvim", dependencies = {"L3MON4D3/LuaSnip", "lervag/vimtex"}},
+		{
+			"shaunsingh/nord.nvim",
+			priority=1000,
+			config = function()
+				vim.cmd.colorscheme("nord")
+			end,
+		},
+
 }
 
 require("lazy").setup(plugins, {})

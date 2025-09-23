@@ -1,5 +1,5 @@
 require("nvim-treesitter.configs").setup({
-	ensure_installed = { "lua", "python", "vimdoc", "markdown"}, --any language parsers you want installed
+	ensure_installed = { "lua", "python", "vimdoc", "bibtex", "latex", "ninja", "rst"}, --any language parsers you want installed
 	sync_install = false, --if you want to load the parsers synchronously
 	auto_install = true,
 	highlight = {
