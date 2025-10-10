@@ -17,9 +17,10 @@ vim.g.mapleader = " " -- the leader key is used in many keymaps,
 
 
 local plugins = {
-	{ "lewis6991/gitsigns.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
-    	{"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
-   	 {"nvim-telescope/telescope.nvim", tag = '0.1.6', 
+    	{ "lewis6991/gitsigns.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
+	    -- Treesitters
+     	{"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
+    	{"nvim-telescope/telescope.nvim", tag = '0.1.6', 
         	requires = { {"nvim-lua/plenary.nvim"}}},
     	{"ThePrimeagen/harpoon", branch = "harpoon2",
         	dependencies = {"nvim-lua/plenary.nvim"}},
@@ -38,14 +39,18 @@ local plugins = {
 				},
 			},
 		},
+    	{"tpope/vim-fugitive"}, -- Adds git support inside vim
+		---- lsp stuff
+        {"neovim/nvim-lspconfig"}, --lsp configs
+        {"williamboman/mason.nvim", opts = {}}, --lsp package manager
+        {"williamboman/mason-lspconfig.nvim", opts = {}}, --lsp package manager config
+		---- autocomp
         {"hrsh7th/cmp-nvim-lsp"}, -- autocompletion
         {"hrsh7th/nvim-cmp"}, --additional autocompletion
+		---- snippets
         {"L3MON4D3/LuaSnip", version = "v2.*", build = "make install_jsregexp", 
 		dependencies = {'saadparwaiz1/cmp_luasnip','rafamadriz/friendly-snippets'}}, --snippet engine
-        {"williamboman/mason.nvim"}, --lsp package manager
-		{"techtuner/wryan.nvim"},
-	{"nvimtools/none-ls.nvim"},
-        {"williamboman/mason-lspconfig.nvim"}, --lsp package manager config
+	    -- {"nvimtools/none-ls.nvim"},
 		-- latex pluginss
 	"lervag/vimtex", 
 	"KeitaNakamura/tex-conceal.vim",
@@ -82,6 +87,37 @@ local plugins = {
 			end,
 		},
 
-}
+	    {"lervag/vimtex"}, 
+    	{"KeitaNakamura/tex-conceal.vim"},
+ 	    {"nvim-telescope/telescope-bibtex.nvim", requires = {"nvim-telescope/telescope.nvim"}},
+	    --color schemes
+        {"shaunsingh/nord.nvim",
+            name = "nord",
+	        config = function()
+		        vim.cmd("colorscheme nord")
+	        end
+        },
+	    {"folke/zen-mode.nvim"},
+	    {"evesdropper/luasnip-latex-snippets.nvim"},
+	    {'aidavdw/bibcite.nvim',
+          -- Running these commands triggers lazy load. They are still auto-completed.
+          cmd = { 'CiteOpen', 'CiteInsert', 'CitePeek', 'CiteNote' },
+          -- Hitting these keybinds triggers lazy-load. They still show up in which-keys.
+          keys = {
+              { '<leader>ci', ':CiteInsert<CR>', desc = 'Insert citation' },
+              { '<leader>cp', ':CitePeek<CR>', desc = 'Peek citation info' },
+              { '<leader>co', ':CiteOpen<CR>', desc = 'Open citation file' },
+              { '<leader>cn', ':CiteNote<CR>', desc = 'Open citation note' },
+           },
+           -- Configuration goes here! See the config section.
+           opts = {
+           -- This is just an example
+           bibtex_path = '~/Documents/research/references.bib',
+           pdf_dir = '~/Documents/research/papers',
+           notes_dir = '~/Documents/research/notes',
+           text_file_open_mode = 'vsplit',
+          } 
+        }
+   }
 
 require("lazy").setup(plugins, {})
