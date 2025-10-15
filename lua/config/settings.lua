@@ -1,5 +1,10 @@
 vim.g.python3_host_prog="/usr/bin/python3"
 
+-- nvim tree options
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+
 
 vim.g.clipboard=unnamedplus
 -- line numbering
@@ -35,5 +40,4 @@ vim.opt.filetype='on'
 vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], {silent = true, noremap = true})
 vim.api.nvim_set_keymap("n", "<leader><leader>term", ':belowright split | terminal<CR>', 
     {noremap = true, silent=true})
-
 

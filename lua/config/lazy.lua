@@ -22,6 +22,7 @@ local plugins = {
      	{"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
     	{"nvim-telescope/telescope.nvim", tag = '0.1.6', 
         	requires = { {"nvim-lua/plenary.nvim"}}},
+			{'nvim-tree/nvim-tree.lua'},
     	{"ThePrimeagen/harpoon", branch = "harpoon2",
         	dependencies = {"nvim-lua/plenary.nvim"}},
     	{"mbbill/undotree"},
@@ -39,11 +40,6 @@ local plugins = {
 				},
 			},
 		},
-    	{"tpope/vim-fugitive"}, -- Adds git support inside vim
-		---- lsp stuff
-        {"neovim/nvim-lspconfig"}, --lsp configs
-        {"williamboman/mason.nvim", opts = {}}, --lsp package manager
-        {"williamboman/mason-lspconfig.nvim", opts = {}}, --lsp package manager config
 		---- autocomp
         {"hrsh7th/cmp-nvim-lsp"}, -- autocompletion
         {"hrsh7th/nvim-cmp"}, --additional autocompletion
@@ -52,20 +48,7 @@ local plugins = {
 		dependencies = {'saadparwaiz1/cmp_luasnip','rafamadriz/friendly-snippets'}}, --snippet engine
 	    -- {"nvimtools/none-ls.nvim"},
 		-- latex pluginss
-	"lervag/vimtex", 
-	"KeitaNakamura/tex-conceal.vim",
-	{"nvim-telescope/telescope-bibtex.nvim", requires = {"nvim-telescope/telescope.nvim"}},
-	--color schemes
-    {"shaunsingh/nord.nvim",
-        name = "nord",
-	config = function()
-		vim.cmd("colorscheme nord")
-	end
-    },
-	{"folke/zen-mode.nvim"},
-	{"evesdropper/luasnip-latex-snippets.nvim"},
 		{"nvimtools/none-ls.nvim"},
-        {"williamboman/mason-lspconfig.nvim"}, --lsp package manager configs
 		{
 			"lervag/vimtex",
 			lazy = false, -- lazy-loading will disable inverse search
@@ -86,9 +69,6 @@ local plugins = {
 				vim.cmd.colorscheme("nord")
 			end,
 		},
-
-	    {"lervag/vimtex"}, 
-    	{"KeitaNakamura/tex-conceal.vim"},
  	    {"nvim-telescope/telescope-bibtex.nvim", requires = {"nvim-telescope/telescope.nvim"}},
 	    --color schemes
         {"shaunsingh/nord.nvim",
@@ -112,9 +92,9 @@ local plugins = {
            -- Configuration goes here! See the config section.
            opts = {
            -- This is just an example
-           bibtex_path = '~/Documents/research/references.bib',
-           pdf_dir = '~/Documents/research/papers',
-           notes_dir = '~/Documents/research/notes',
+           bibtex_path = '~/Documents/Research/bib/references.bib',
+           pdf_dir = '~/Documents/Research/papers',
+           notes_dir = '~/Documents/Research/notes',
            text_file_open_mode = 'vsplit',
           } 
         }
