@@ -1,4 +1,4 @@
-vim.g.python3_host_prog="/usr/bin/python3"
+vim.g.python3_host_prog="/home/rohitpochampalli/nvimenv/bin/python3"
 
 -- nvim tree options
 vim.g.loaded_netrw = 1
@@ -41,3 +41,9 @@ vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], {silent = true, noremap = true})
 vim.api.nvim_set_keymap("n", "<leader><leader>term", ':belowright split | terminal<CR>', 
     {noremap = true, silent=true})
 
+-- For better unicode/glyph support in terminal
+vim.opt.encoding = "utf-8"
+vim.opt.fileencoding = "utf-8"
+
+-- Set fallback fonts for terminal (if supported)
+vim.opt.guifont = "JetBrains Nerd"

@@ -4,6 +4,7 @@ ls.setup({
 	keep_roots = true,
     link_roots = true,
     link_children = true,
+	history = true,
     update_events = "TextChanged,TextChangedI",
     delete_check_events = "TextChanged",
     ext_opts = {
@@ -18,6 +19,10 @@ ls.setup({
     -- minimal increase in priority.
     ext_prio_increase = 1,
     enable_autosnippets = false,
+	-- enable autotriggered snippets
+	enable_autosnippets = true,
+	-- use tab to trigger visual selection
+	store_selection_keys = "<Tab>",
 })
 
 -- "Select mode" is what luasnip ends up in when snippets contain placeholder text
@@ -41,10 +46,11 @@ vim.keymap.set({ "i", "s" }, "<C-B>", function()
         end
       end, { desc = "Jump backward in lua-snippet", silent = true })
 
-      vim.keymap.set({"i", "s"}, "<C-E>", function()
+vim.keymap.set({"i", "s"}, "<Tab>", function()
         if ls.choice_active() then
           ls.change_choice(1)
         end
       end, { desc = "Switch between choices in lua-snippet", silent = true})
 
--- require("luasnip.loaders.from_lua").load() -- load from ~/.config/nvim/luasnippets
+-- Custom local snippets
+require("luasnip.loaders.from_lua").load({paths = "~/.config/nvim/LuaSnip/"}) -- load from ~/.config/nvim/luasnippets

@@ -33,3 +33,34 @@ keymap('x', 'ic', '<plug>(vimtex-ic)')
 keymap('x', 'ac', '<plug>(vimtex-ac)')
 keymap('o', 'ic', '<plug>(vimtex-ic)')
 keymap('o', 'ac', '<plug>(vimtex-ac)')
+
+
+
+-- "Select mode" is what luasnip ends up in when snippets contain placeholder text
+--vim.keymap.set({ "i", "s" }, "<Tab>",
+--        function()
+--          if ls.expand_or_locally_jumpable() then
+--            ls.expand_or_jump()
+--          end
+--        end,
+--        { desc = "Expand or jump forward in lua-snippet", silent = true })
+--
+--vim.keymap.set({ "i", "s" }, "<Shift-Tab>", function()
+--        if ls.jumpable(-1) then
+--          ls.jump(-1)
+--        end
+--      end, { desc = "Jump backward in lua-snippet", silent = true })
+--
+--vim.keymap.set({ "i", "s" }, "<C-B>", function()
+--        if ls.jumpable(-1) then
+--          ls.jump(-1)
+--        end
+--      end, { desc = "Jump backward in lua-snippet", silent = true })
+--
+--vim.keymap.set({"i", "s"}, "<Tab>", function()
+--        if ls.choice_active() then
+--          ls.change_choice(1)
+--        end
+--      end, { desc = "Switch between choices in lua-snippet", silent = true})
+--
+--

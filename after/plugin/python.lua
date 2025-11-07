@@ -1,5 +1,3 @@
-
-
 function OpenTerminalBuffer(termType)
     -- open a terminal buffer
     vim.api.nvim_exec2('belowright split | term', {output = true})
