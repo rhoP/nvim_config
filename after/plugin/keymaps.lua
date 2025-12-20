@@ -34,6 +34,15 @@ keymap('x', 'ac', '<plug>(vimtex-ac)')
 keymap('o', 'ic', '<plug>(vimtex-ic)')
 keymap('o', 'ac', '<plug>(vimtex-ac)')
 
+-- Python 
+-- Keymaps for LSP
+vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'Go to definition' })
+vim.keymap.set('n', 'gr', vim.lsp.buf.references, { desc = 'Go to references' })
+vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'Hover documentation' })
+vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'Code action' })
+vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'Rename symbol' })
+
+
 
 
 -- "Select mode" is what luasnip ends up in when snippets contain placeholder text

@@ -15,173 +15,160 @@ vim.opt.rtp:prepend(lazypath)
 
 vim.g.mapleader = " " -- the leader key is used in many keymaps,
 
-
 local plugins = {
-    	{ "lewis6991/gitsigns.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
-	    -- Treesitters
-     	{"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
-    	{"nvim-telescope/telescope.nvim", tag = '0.1.6', 
-        	requires = { {"nvim-lua/plenary.nvim"}}},
-			{'nvim-tree/nvim-tree.lua'},
-		-- Harpoon? 
-    	{"ThePrimeagen/harpoon", branch = "harpoon2",
-        	dependencies = {"nvim-lua/plenary.nvim"}},
-    	{"mbbill/undotree"},
-    	{"tpope/vim-fugitive"}, --lsp configuration
-		{
+	{ "lewis6991/gitsigns.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
+	-- Treesitters
+	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
+	-- Telescope for fuzzy finding
+	{
+		"nvim-telescope/telescope.nvim",
+		requires = { "nvim-lua/plenary.nvim" },
+	},
+	-- File Tree
+	{
+		"nvim-tree/nvim-tree.lua",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = function()
+			require("nvim-tree").setup()
+			vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>", { desc = "Toggle file tree" })
+		end,
+	},
+	-- Status line
+	{
+		"nvim-lualine/lualine.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = function()
+			require("lualine").setup({
+				options = {
+					theme = "auto",
+				},
+			})
+		end,
+	},
+	-- Harpoon?
+	{
+		"ThePrimeagen/harpoon",
+		branch = "harpoon2",
+		dependencies = { "nvim-lua/plenary.nvim" },
+	},
+	{ "mbbill/undotree" },
+	{ "tpope/vim-fugitive" },
+	--lsp configuration
+	{
+		"mason-org/mason.nvim",
+		opts = {},
+	},
+	{
+		"neovim/nvim-lspconfig",
+	},
+	{
+		"mason-org/mason-lspconfig.nvim",
+		opts = {},
+		dependencies = {
+			{ "mason-org/mason.nvim", opts = {} },
 			"neovim/nvim-lspconfig",
-			optional = true,
-			opts = {
-			servers = {
-			texlab = {
-			keys = {
-				{ "<Leader>K", "<plug>(vimtex-doc-package)", desc = "Vimtex Docs", silent = true },
-						},
-					},
-				},
-			},
 		},
-		---- autocomp
-        {"hrsh7th/cmp-nvim-lsp"}, -- autocompletion
-        {"hrsh7th/nvim-cmp"}, --additional autocompletion
-		---- snippets
-        {"L3MON4D3/LuaSnip", version = "v2.*", build = "make install_jsregexp", 
-		dependencies = {'saadparwaiz1/cmp_luasnip','rafamadriz/friendly-snippets'}}, --snippet engine
-		{'mireq/luasnip-snippets',
-			dependencies = {'L3MON4D3/LuaSnip'},
-				init = function()
-					-- Mandatory setup function
-					require('luasnip_snippets.common.snip_utils').setup()
-				end},
-		-- latex pluginss
-		{"nvimtools/none-ls.nvim"},
-		{
-			"lervag/vimtex",
-			lazy = false, -- lazy-loading will disable inverse search
-			config = function()
-				vim.g.vimtex_mappings_disable = { ["n"] = { "K" } } -- disable `K` as it conflicts with LSP hover
-				vim.g.vimtex_quickfix_method = vim.fn.executable("pplatex") == 1 and "pplatex" or "latexlog"
-			end,
-			keys = {
-				{ "<localLeader>l", "", desc = "+vimtex", ft = "tex" },
-			},
+	},
+	{
+		"stevearc/conform.nvim",
+		event = { "BufWritePre" },
+		cmd = { "ConformInfo" },
+
+		opts = {},
+	},
+	---- autocomp
+	{
+		"hrsh7th/nvim-cmp",
+		dependencies = {
+			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-cmdline",
+			"L3MON4D3/LuaSnip",
+			"saadparwaiz1/cmp_luasnip",
 		},
-		{"KeitaNakamura/tex-conceal.vim"},
-		{"iurimateus/luasnip-latex-snippets.nvim", dependencies = {"L3MON4D3/LuaSnip", "lervag/vimtex"}},
-		{
-			"shaunsingh/nord.nvim",
-			priority=1000,
-			config = function()
-				vim.cmd.colorscheme("nord")
-			end,
+	}, --additional autocompletion
+	{ "nvim-neotest/nvim-nio" },
+	{
+		"mfussenegger/nvim-dap",
+		dependencies = {
+			"mfussenegger/nvim-dap-python",
+			"rcarriga/nvim-dap-ui",
 		},
- 	    {"nvim-telescope/telescope-bibtex.nvim", requires = {"nvim-telescope/telescope.nvim"}},
-	    --color schemes
-        {"shaunsingh/nord.nvim",
-            name = "nord",
-	        config = function()
-		        vim.cmd("colorscheme nord")
-	        end
-        },
-	    {"folke/zen-mode.nvim"},
-	    {"evesdropper/luasnip-latex-snippets.nvim"},
-	    {'aidavdw/bibcite.nvim',
-          -- Running these commands triggers lazy load. They are still auto-completed.
-          cmd = { 'CiteOpen', 'CiteInsert', 'CitePeek', 'CiteNote' },
-          -- Hitting these keybinds triggers lazy-load. They still show up in which-keys.
-          keys = {
-              { '<leader>ci', ':CiteInsert<CR>', desc = 'Insert citation' },
-              { '<leader>cp', ':CitePeek<CR>', desc = 'Peek citation info' },
-              { '<leader>co', ':CiteOpen<CR>', desc = 'Open citation file' },
-              { '<leader>cn', ':CiteNote<CR>', desc = 'Open citation note' },
-           },
-           -- Configuration goes here! See the config section.
-           opts = {
-           -- This is just an example
-           bibtex_path = '~/Documents/Research/bib/references.bib',
-           pdf_dir = '~/Documents/Research/papers',
-           notes_dir = '~/Documents/Research/notes',
-           text_file_open_mode = 'vsplit',
-          }, 
-        },
-		--cursor 
-		{
-		  "yetone/avante.nvim",
-		  -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-		  --  must add this setting! ! !
-		  build = vim.fn.has("win32") ~= 0
-			  and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
-			  or "make",
-		  event = "VeryLazy",
-		  version = false, -- Never set this value to "*"! Never!
-		  ---@module 'avante'
-		  ---@type avante.Config
-		  opts = {
-			-- add any opts here
-			-- this file can contain specific instructions for your project
-			instructions_file = "avante.md",
-			-- for example
-			provider = "claude",
-			providers = {
-			  claude = {
-				endpoint = "https://api.anthropic.com",
-				model = "claude-sonnet-4-20250514",
-				timeout = 30000, -- Timeout in milliseconds
-				  extra_request_body = {
-					temperature = 0.75,
-					max_tokens = 20480,
-				  },
-			  },
-			  moonshot = {
-				endpoint = "https://api.moonshot.ai/v1",
-				model = "kimi-k2-0711-preview",
-				timeout = 30000, -- Timeout in milliseconds
-				extra_request_body = {
-				  temperature = 0.75,
-				  max_tokens = 32768,
-				},
-			  },
-			},
-		  },
-		  dependencies = {
-			"nvim-lua/plenary.nvim",
-			"MunifTanjim/nui.nvim",
-			--- The below dependencies are optional,
-			"nvim-mini/mini.pick", -- for file_selector provider mini.pick
-			"nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-			"hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
-			"ibhagwan/fzf-lua", -- for file_selector provider fzf
-			"stevearc/dressing.nvim", -- for input provider dressing
-			"folke/snacks.nvim", -- for input provider snacks
-			"nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-			"zbirenbaum/copilot.lua", -- for providers='copilot'
-			{
-			  -- support for image pasting
-			  "HakonHarnes/img-clip.nvim",
-			  event = "VeryLazy",
-			  opts = {
-				-- recommended settings
-				default = {
-				  embed_image_as_base64 = false,
-				  prompt_for_file_name = false,
-				  drag_and_drop = {
-					insert_mode = true,
-				  },
-				  -- required for Windows users
-				  use_absolute_path = true,
-				},
-			  },
-			},
-			{
-			  -- Make sure to set this up properly if you have lazy=true
-			  'MeanderingProgrammer/render-markdown.nvim',
-			  opts = {
-				file_types = { "markdown", "Avante" },
-			  },
-			  ft = { "markdown", "Avante" },
-			},
-		  },
-		}
-   }
+	},
+	---- folding
+	{
+		"kevinhwang91/nvim-ufo",
+		dependencies = { "kevinhwang91/promise-async" },
+	},
+	---- snippets
+	{
+		"L3MON4D3/LuaSnip",
+		version = "v2.*",
+		build = "make install_jsregexp",
+		dependencies = { "saadparwaiz1/cmp_luasnip", "rafamadriz/friendly-snippets" },
+	}, --snippet engine
+	{
+		"mireq/luasnip-snippets",
+		dependencies = { "L3MON4D3/LuaSnip" },
+		init = function()
+			-- Mandatory setup function
+			require("luasnip_snippets.common.snip_utils").setup()
+		end,
+	},
+	-- latex pluginss
+	{
+		"lervag/vimtex",
+		lazy = false, -- lazy-loading will disable inverse search
+		config = function()
+			vim.g.vimtex_mappings_disable = { ["n"] = { "K" } } -- disable `K` as it conflicts with LSP hover
+			vim.g.vimtex_quickfix_method = vim.fn.executable("pplatex") == 1 and "pplatex" or "latexlog"
+		end,
+		keys = {
+			{ "<localLeader>l", "", desc = "+vimtex", ft = "tex" },
+		},
+	},
+	{ "KeitaNakamura/tex-conceal.vim" },
+	{ "iurimateus/luasnip-latex-snippets.nvim", dependencies = { "L3MON4D3/LuaSnip", "lervag/vimtex" } },
+	{
+		"shaunsingh/nord.nvim",
+		priority = 1000,
+		config = function()
+			vim.cmd.colorscheme("nord")
+		end,
+	},
+	{ "nvim-telescope/telescope-bibtex.nvim", requires = { "nvim-telescope/telescope.nvim" } },
+	----------------------------------color schemes--------------------------------------------
+	{
+		"shaunsingh/nord.nvim",
+		name = "nord",
+		config = function()
+			vim.cmd("colorscheme nord")
+		end,
+	},
+	--------------------------------------------------------------------------------------------
+	{ "folke/zen-mode.nvim" },
+	{ "evesdropper/luasnip-latex-snippets.nvim" },
+	{
+		"aidavdw/bibcite.nvim",
+		-- Running these commands triggers lazy load. They are still auto-completed.
+		cmd = { "CiteOpen", "CiteInsert", "CitePeek", "CiteNote" },
+		-- Hitting these keybinds triggers lazy-load. They still show up in which-keys.
+		keys = {
+			{ "<leader>ci", ":CiteInsert<CR>", desc = "Insert citation" },
+			{ "<leader>cp", ":CitePeek<CR>", desc = "Peek citation info" },
+			{ "<leader>co", ":CiteOpen<CR>", desc = "Open citation file" },
+			{ "<leader>cn", ":CiteNote<CR>", desc = "Open citation note" },
+		},
+		-- Configuration goes here! See the config section.
+		opts = {
+			-- This is just an example
+			bibtex_path = "~/Documents/Research/bib/references.bib",
+			pdf_dir = "~/Documents/Research/papers",
+			notes_dir = "~/Documents/Research/notes",
+			text_file_open_mode = "vsplit",
+		},
+	},
+}
 
 require("lazy").setup(plugins, {})

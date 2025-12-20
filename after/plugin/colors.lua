@@ -1,4 +1,4 @@
-vim.o.termguicolors = true
---vim.o.background='light'
--- vim.o.background='dark'
+--vim.o.termguicolors = true
 vim.cmd([[colorscheme nord]])
+-- vim.o.background='latte'
+-- vim.o.background='dark'

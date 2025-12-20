@@ -53,4 +53,4 @@ vim.keymap.set({"i", "s"}, "<Tab>", function()
       end, { desc = "Switch between choices in lua-snippet", silent = true})
 
 -- Custom local snippets
-require("luasnip.loaders.from_lua").load({paths = "~/.config/nvim/LuaSnip/"}) -- load from ~/.config/nvim/luasnippets
+require("luasnip.loaders.from_lua").load({paths = "~/.config/nvim/Snippets/"}) -- load from ~/.config/nvim/luasnippets

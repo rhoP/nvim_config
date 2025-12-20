@@ -1,21 +1,20 @@
-vim.g.python3_host_prog="/home/rohitpochampalli/nvimenv/bin/python3"
+vim.g.python3_host_prog = "/home/rohitpochampalli/nvimenv/bin/python3"
 
 -- nvim tree options
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
-
-
-vim.g.clipboard=unnamedplus
+vim.g.clipboard = unnamedplus
 -- line numbering
-vim.opt.nu = true
+vim.opt.number = true
 vim.opt.relativenumber = true
 
 -- set tab spaces to 4
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
-vim.expandtab = true
+vim.opt.expandtab = true
+vim.opt.wrap = true
 
 -- hand off undoing to undotree plugin and don't keep a swapfile
 vim.opt.swapfile = false
@@ -27,6 +26,11 @@ vim.opt.undofile = true
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
+-- idk what these are tbh
+vim.opt.scrolloff = 8
+vim.opt.signcolumn = "yes"
+vim.opt.isfname:append("@-@")
+
 -- fast update time
 vim.opt.updatetime = 50
 
@@ -34,12 +38,22 @@ vim.opt.updatetime = 50
 --vim.opt.colorcolumn = "80"
 
 -- filetype trigger
-vim.opt.filetype='on'
+vim.opt.filetype = "on"
 
 -- set escape to enter normal mode in terminal buffer
-vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], {silent = true, noremap = true})
-vim.api.nvim_set_keymap("n", "<leader><leader>term", ':belowright split | terminal<CR>', 
-    {noremap = true, silent=true})
+vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], { silent = true, noremap = true })
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader><leader>term",
+	":belowright split | terminal<CR>",
+	{ noremap = true, silent = true }
+)
+
+-- keymaps for conform
+-- Format with conform
+vim.keymap.set({ "n", "v" }, "<leader>f", function()
+	require("conform").format({ async = true, lsp_fallback = true })
+end, { desc = "Format buffer" })
 
 -- For better unicode/glyph support in terminal
 vim.opt.encoding = "utf-8"
@@ -47,3 +61,30 @@ vim.opt.fileencoding = "utf-8"
 
 -- Set fallback fonts for terminal (if supported)
 vim.opt.guifont = "JetBrains Nerd"
+
+-- Filetype detection
+vim.filetype.add({
+	pattern = {
+		[".*%.cfg"] = function()
+			-- Check if the content looks like EditorConfig
+			local content = vim.fn.join(vim.fn.readfile(vim.fn.expand("%"), "", 10), "\n")
+			if content:match("^%s*%[.*%]") or content:match("^%s*[^%s=]+%s*=%s*[^%s]") then
+				return "editorconfig"
+			end
+			return "cfg"
+		end,
+	},
+})
+
+-- Folding, options from nvim-ufo
+vim.o.foldcolumn = "1" -- '0' is not bad
+vim.o.foldlevel = 99
+vim.o.foldlevelstart = 99
+vim.o.foldenable = true
+
+vim.keymap.set("n", "zR", require("ufo").openAllFolds)
+vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
+
+-- Python lsp
+-- set to "basedpyright" as another option
+vim.g.lazyvim_python_lsp = "pyright"
