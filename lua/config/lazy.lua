@@ -87,7 +87,8 @@ local plugins = {
 			"L3MON4D3/LuaSnip",
 			"saadparwaiz1/cmp_luasnip",
 		},
-	}, --additional autocompletion
+	},
+	--------------------------------------additional autocompletion------------------------------------
 	{ "nvim-neotest/nvim-nio" },
 	{
 		"mfussenegger/nvim-dap",
@@ -96,18 +97,18 @@ local plugins = {
 			"rcarriga/nvim-dap-ui",
 		},
 	},
-	---- folding
+	----------------------------------------folding------------------------------------
 	{
 		"kevinhwang91/nvim-ufo",
 		dependencies = { "kevinhwang91/promise-async" },
 	},
-	---- snippets
+	----------------------------------------snippets------------------------------------
 	{
 		"L3MON4D3/LuaSnip",
 		version = "v2.*",
 		build = "make install_jsregexp",
 		dependencies = { "saadparwaiz1/cmp_luasnip", "rafamadriz/friendly-snippets" },
-	}, --snippet engine
+	}, --------------------------------------snippet engine------------------------------------
 	{
 		"mireq/luasnip-snippets",
 		dependencies = { "L3MON4D3/LuaSnip" },
@@ -116,7 +117,7 @@ local plugins = {
 			require("luasnip_snippets.common.snip_utils").setup()
 		end,
 	},
-	-- latex pluginss
+	------------------------------------latex plugins----------------------------------
 	{
 		"lervag/vimtex",
 		lazy = false, -- lazy-loading will disable inverse search
