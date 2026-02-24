@@ -46,8 +46,21 @@ M = {
     ^{\mathtt T}<>
     ]],
     { i(0) })),
-
-	
+    autosnippet({ trig = "mcal", name = "mathcal", dscr = "calligraphic text" },
+	fmta([[
+    \mathcal{<>}<>
+    ]],
+    { i(1), i(0) })),
+   	autosnippet({ trig = "mscr", name = "mathscr", dscr = "script text" },
+	fmta([[
+    \mathscr{<>}<>
+    ]],
+    { i(1), i(0) })),
+    autosnippet({ trig = "mbb", name = "mathbb", dscr = "blackboard text" },
+	fmta([[
+    \mathbb{<>}<>
+    ]],
+    { i(1), i(0) })),
     }
 
 return M
