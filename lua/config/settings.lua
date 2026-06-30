@@ -1,4 +1,4 @@
-vim.g.python3_host_prog = "/home/rohitpochampalli/nvimenv/bin/python3"
+vim.g.python3_host_prog = "/home/rohit/.venvs/nvimenv/bin/python3"
 
 -- nvim tree options
 vim.g.loaded_netrw = 1
@@ -6,39 +6,39 @@ vim.g.loaded_netrwPlugin = 1
 
 vim.g.clipboard = unnamedplus
 -- line numbering
-vim.opt.number = true
-vim.opt.relativenumber = true
+vim.o.number = true
+vim.o.relativenumber = true
 
 -- set tab spaces to 4
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
-vim.opt.wrap = true
+vim.o.tabstop = 4
+vim.o.softtabstop = 4
+vim.o.shiftwidth = 4
+vim.o.expandtab = true
+vim.o.wrap = true
 
 -- hand off undoing to undotree plugin and don't keep a swapfile
-vim.opt.swapfile = false
-vim.opt.backup = false
+vim.o.swapfile = false
+vim.o.backup = false
 vim.undodir = os.getenv("HOME") .. "/.vim.undodir"
-vim.opt.undofile = true
+vim.o.undofile = true
 
 -- set incremental search. This helps immensly with tricky searches
-vim.opt.hlsearch = false
-vim.opt.incsearch = true
+vim.o.hlsearch = false
+vim.o.incsearch = true
 
 -- idk what these are tbh
-vim.opt.scrolloff = 8
-vim.opt.signcolumn = "yes"
-vim.opt.isfname:append("@-@")
+vim.o.scrolloff = 8
+vim.o.signcolumn = "yes"
+--vim.o.isfname:append("@-@")
 
 -- fast update time
-vim.opt.updatetime = 50
+vim.o.updatetime = 50
 
 -- color column to 80 characters
---vim.opt.colorcolumn = "80"
+--vim.o.colorcolumn = "80"
 
 -- filetype trigger
-vim.opt.filetype = "on"
+vim.o.filetype = "on"
 
 -- set escape to enter normal mode in terminal buffer
 vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], { silent = true, noremap = true })
@@ -56,11 +56,11 @@ vim.keymap.set({ "n", "v" }, "<leader>f", function()
 end, { desc = "Format buffer" })
 
 -- For better unicode/glyph support in terminal
-vim.opt.encoding = "utf-8"
-vim.opt.fileencoding = "utf-8"
+vim.o.encoding = "utf-8"
+vim.o.fileencoding = "utf-8"
 
 -- Set fallback fonts for terminal (if supported)
-vim.opt.guifont = "JetBrains Nerd"
+vim.o.guifont = "JetBrains Nerd"
 
 -- Filetype detection
 vim.filetype.add({
