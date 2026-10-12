@@ -18,7 +18,13 @@ vim.g.mapleader = " " -- the leader key is used in many keymaps,
 local plugins = {
 	{ "lewis6991/gitsigns.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
 	-- Treesitters
-	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
+	{ "nvim-treesitter/nvim-treesitter", 
+        lazy=false, 
+        build = ":TSUpdate", 
+        config = function()
+            require("nvim-treesitter").setup({})
+        end 
+    },
 	-- Telescope for fuzzy finding
 	{
 		"nvim-telescope/telescope.nvim",
@@ -131,22 +137,35 @@ local plugins = {
 	},
 	{ "KeitaNakamura/tex-conceal.vim" },
 	{ "iurimateus/luasnip-latex-snippets.nvim", dependencies = { "L3MON4D3/LuaSnip", "lervag/vimtex" } },
-	{
-		"shaunsingh/nord.nvim",
-		priority = 1000,
-		config = function()
-			vim.cmd.colorscheme("nord")
-		end,
-	},
 	{ "nvim-telescope/telescope-bibtex.nvim", requires = { "nvim-telescope/telescope.nvim" } },
 	----------------------------------color schemes--------------------------------------------
-	{
-		"shaunsingh/nord.nvim",
-		name = "nord",
-		config = function()
-			vim.cmd("colorscheme nord")
-		end,
-	},
+	{"aktersnurra/no-clown-fiesta.nvim"},
+     {
+    "f-person/auto-dark-mode.nvim",
+    opts = {
+      update_interval = 1000,
+      fallback = "dark",
+
+      set_dark_mode = function()
+        require("no-clown-fiesta").setup({
+          theme = "dark",
+          transparent = false,
+        })
+
+        vim.cmd.colorscheme("no-clown-fiesta")
+      end,
+
+      set_light_mode = function()
+        require("no-clown-fiesta").setup({
+          theme = "light",
+          transparent = false,
+        })
+
+        vim.cmd.colorscheme("no-clown-fiesta")
+      end,
+    },
+  },
+
 	--------------------------------------------------------------------------------------------
 	{ "folke/zen-mode.nvim" },
 	{ "evesdropper/luasnip-latex-snippets.nvim" },

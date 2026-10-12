@@ -55,13 +55,6 @@ vim.keymap.set({ "n", "v" }, "<leader>f", function()
 	require("conform").format({ async = true, lsp_fallback = true })
 end, { desc = "Format buffer" })
 
--- For better unicode/glyph support in terminal
-vim.o.encoding = "utf-8"
-vim.o.fileencoding = "utf-8"
-
--- Set fallback fonts for terminal (if supported)
-vim.o.guifont = "JetBrains Nerd"
-
 -- Filetype detection
 vim.filetype.add({
 	pattern = {

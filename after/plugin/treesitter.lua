@@ -1,18 +1,6 @@
-require("nvim-treesitter.configs").setup({
-	ensure_installed = { "lua", "python", "vimdoc", "ninja", "rst", "vim",
-	"editorconfig", "yaml", "bash", "json", "hjson", "dot", "c", "cpp", "query"}, --any language parsers you want installed
-    sync_install = true, --if you want to load the parsers synchronously
-	auto_install = true,
-	highlight = {
-		enable = true,
-		disable = {}, --include any languages you want to disable highlighting
-		disable = function(lang, buf)
-			local max_filesize = 100 * 1024 -- 100 KiB
-			local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-			if ok and stats and stats.size < max_filesize then
-				return true
-			end
-		end,
-		additional_vim_regex_highlighting = false,
-	},
+-- Enable Tree-sitter highlighting for supported filetypes.
+vim.api.nvim_create_autocmd("FileType", {
+    callback = function(args)
+        pcall(vim.treesitter.start, args.buf)
+    end,
 })
