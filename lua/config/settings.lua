@@ -4,7 +4,7 @@ vim.g.python3_host_prog = "/home/rohit/.venvs/nvimenv/bin/python3"
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
-vim.g.clipboard = unnamedplus
+vim.o.clipboard = "unnamedplus"
 -- line numbering
 vim.o.number = true
 vim.o.relativenumber = true
@@ -19,7 +19,8 @@ vim.o.wrap = true
 -- hand off undoing to undotree plugin and don't keep a swapfile
 vim.o.swapfile = false
 vim.o.backup = false
-vim.undodir = os.getenv("HOME") .. "/.vim.undodir"
+vim.o.undodir = os.getenv("HOME") .. "/.vim.undodir"
+vim.fn.mkdir(vim.o.undodir, "p")
 vim.o.undofile = true
 
 -- set incremental search. This helps immensly with tricky searches
@@ -38,7 +39,7 @@ vim.o.updatetime = 50
 --vim.o.colorcolumn = "80"
 
 -- filetype trigger
-vim.o.filetype = "on"
+vim.cmd("filetype plugin indent on")
 
 -- set escape to enter normal mode in terminal buffer
 vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], { silent = true, noremap = true })
